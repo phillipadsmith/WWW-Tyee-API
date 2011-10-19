@@ -81,6 +81,17 @@ sub get_story {
         return $story;
 }
 
+sub get_query {
+        my ( $self, $query ) = @_;
+        my $response = HTTP::Tiny->new->get('http://preview.api.thetyee.ca/v1/search/' . $query );
+        croak "Problem with response" unless $response->{'success'};
+
+        my $results = decode_result( $response->{'content'} );
+        my $stories = $results->{'hits'}{'hits'};
+        $stories = unfuck( $stories );
+        return $stories
+}
+
 =head2 decode_result
 
 =cut
