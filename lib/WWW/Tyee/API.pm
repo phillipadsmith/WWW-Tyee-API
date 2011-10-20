@@ -24,6 +24,7 @@ Version 0.01
 
 our $VERSION = '0.01';
 
+use constant API_URL => 'http://preview.api.thetyee.ca/v1';
 
 =head1 SYNOPSIS
 
@@ -41,6 +42,9 @@ Perhaps a little code snippet.
 A list of functions that can be exported.  You can delete this section
 if you don't export anything, such as for a purely object-oriented module.
 
+==head1 CONSTANTS
+
+
 =head1 SUBROUTINES/METHODS
 
 =head2 get_latest_grouped 
@@ -48,7 +52,7 @@ if you don't export anything, such as for a purely object-oriented module.
 =cut
 
 sub get_latest_grouped {
-        my $response = HTTP::Tiny->new->get('http://preview.api.thetyee.ca/v1/latest/grouped');
+        my $response = HTTP::Tiny->new->get( API_URL . '/latest/grouped');
         croak "Problem with response" unless $response->{'success'};
 
         my $results = decode_result( $response->{'content'} );
@@ -59,7 +63,7 @@ sub get_latest_grouped {
 
 sub get_topic {
         my ( $self, $topic ) = @_;
-        my $response = HTTP::Tiny->new->get('http://preview.api.thetyee.ca/v1/topic/' . $topic );
+        my $response = HTTP::Tiny->new->get( API_URL . '/topic/' . $topic );
         croak "Problem with response" unless $response->{'success'};
 
         my $results = decode_result( $response->{'content'} );
@@ -70,7 +74,7 @@ sub get_topic {
 
 sub get_story {
         my ($self, $path) = @_;
-        my $response = HTTP::Tiny->new->get('http://preview.api.thetyee.ca/v1/search/path/' . $path );
+        my $response = HTTP::Tiny->new->get( API_URL . '/search/path/' . $path );
         croak "Problem with response" unless $response->{'success'};
 
         my $stories = [];
@@ -83,7 +87,7 @@ sub get_story {
 
 sub get_query {
         my ( $self, $query ) = @_;
-        my $response = HTTP::Tiny->new->get('http://preview.api.thetyee.ca/v1/search/' . $query );
+        my $response = HTTP::Tiny->new->get( API_URL . '/search/' . $query );
         croak "Problem with response" unless $response->{'success'};
 
         my $results = decode_result( $response->{'content'} );
