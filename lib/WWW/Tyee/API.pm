@@ -72,6 +72,17 @@ sub get_topic {
         return $stories
 }
 
+sub get_path {
+        my ( $self, $path ) = @_;
+        my $response = HTTP::Tiny->new->get( API_URL . '/search/path/' . $path );
+        croak "Problem with response" unless $response->{'success'};
+
+        my $results = decode_result( $response->{'content'} );
+        my $stories = $results->{'hits'}{'hits'};
+        $stories = unfuck( $stories );
+        return $stories
+}
+
 sub get_story {
         my ($self, $path) = @_;
         my $response = HTTP::Tiny->new->get( API_URL . '/search/path/' . $path );
