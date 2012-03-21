@@ -24,7 +24,7 @@ Version 0.01
 
 our $VERSION = '0.01';
 
-use constant API_URL => 'http://preview.api.thetyee.ca/v1';
+use constant API_URL => 'http://api.thetyee.ca/v1';
 
 =head1 SYNOPSIS
 
