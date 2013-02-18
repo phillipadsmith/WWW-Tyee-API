@@ -61,6 +61,16 @@ sub get_latest_grouped {
         return $stories
 }
 
+sub get_latest_blogs {
+        my $response = HTTP::Tiny->new->get( API_URL . '/latest/blogs');
+        croak "Problem with response" unless $response->{'success'};
+
+        my $results = decode_result( $response->{'content'} );
+        my $stories = $results->{'hits'}{'hits'};
+        $stories = unfuck( $stories );
+        return $stories
+}
+
 sub get_topic {
         my ( $self, $topic ) = @_;
         my $response = HTTP::Tiny->new->get( API_URL . '/topic/' . $topic );
